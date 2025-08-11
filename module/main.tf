@@ -1,5 +1,5 @@
-module "fifi" {
+module "kuku" {
 source = "../infra"
-res_grp = "tamatar"
+res_grp = "inni"
 res_loc = "CentralIndia"
 }
