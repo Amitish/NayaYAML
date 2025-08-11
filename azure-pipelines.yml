@@ -1,4 +1,8 @@
-trigger: none
+
+trigger:
+  branches:
+    include:
+      - feature/*
 
 pool: Agent-ka-pool
 
