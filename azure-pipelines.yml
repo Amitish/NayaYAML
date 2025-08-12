@@ -34,9 +34,9 @@ steps:
 
 - task: TerraformTask@5
   displayName: apply
-  condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'main'))
   inputs:
     provider: 'azurerm'
     command: 'apply'
     workingDirectory: $(path)
     environmentServiceNameAzureRM: 'NewSPN'
+
