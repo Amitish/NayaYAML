@@ -1,0 +1,42 @@
+trigger:
+  branches:
+    include:
+      - feature/*
+
+pool: Agent-ka-pool
+
+variables:
+  path: '$(System.DefaultWorkingDirectory)\module'
+
+steps:
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTask@5
+  displayName: Init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: $(path)
+    backendServiceArm: 'NewSPN'
+    backendAzureRmStorageAccountName: 'yamlstracc'
+    backendAzureRmContainerName: 'yamlcntr'
+    backendAzureRmKey: 'yaml.tfstate'
+
+- task: TerraformTask@5
+  displayName: plan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(path)'
+    environmentServiceNameAzureRM: 'NewSPN'
+
+- task: TerraformTask@5
+  displayName: apply
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: $(path)
+    environmentServiceNameAzureRM: 'NewSPN'
+
